@@ -20,6 +20,7 @@ MODEL_PATH = os.path.join(APP_DIR, "best_model.keras")
 INFO_PATH = os.path.join(APP_DIR, "model_info.json")
 IMG_DIR = os.path.join(APP_DIR, "test_images")
 LABELS_PATH = os.path.join(IMG_DIR, "labels.csv")
+DISPLAY_DIR = os.path.join(APP_DIR, "display_images")   # full-quality originals shown to players
 N_ROUNDS = 10
 NAMES = {1: "Real", 0: "AI-generated"}          # label convention from the notebook
 
@@ -143,6 +144,17 @@ def b64(file):
         return base64.b64encode(f.read()).decode()
 
 
+@st.cache_data
+def photo(file):
+    """Image shown to the player: the full-quality original if it was exported, else the 128x128 version.
+    The model always predicts on the 128x128 version, which is what it was trained on."""
+    hi = os.path.join(DISPLAY_DIR, os.path.splitext(file)[0] + ".jpg")
+    if os.path.exists(hi):
+        with open(hi, "rb") as f:
+            return "data:image/jpeg;base64," + base64.b64encode(f.read()).decode()
+    return "data:image/png;base64," + b64(file)
+
+
 @st.cache_data(show_spinner="Preparing the faces…")
 def model_probs():
     """P(real) for every game image in one batch. MobileNetV3 takes raw [0, 255] RGB pixels."""
@@ -221,7 +233,7 @@ if g["i"] < N_ROUNDS:
         ring = "r" if e["you"] == e["truth"] else "w"
         text = "Real photo" if e["truth"] == 1 else "AI-generated"
         badge = f'<div class="badge">{text}</div>'
-    show(f'<div class="photo {ring}"><img src="data:image/png;base64,{b64(r["file"])}" alt="Face to judge">{badge}</div>')
+    show(f'<div class="photo {ring}"><img src="{photo(r["file"])}" alt="Face to judge">{badge}</div>')
 
     if not g["revealed"]:
         st.write("")
@@ -271,7 +283,7 @@ else:
         return f'<b style="background:{"var(--right)" if ok else "var(--wrong)"}"></b>'
 
     tiles = "".join(
-        f'<div class="tile"><img src="data:image/png;base64,{b64(e["file"])}" alt="{NAMES[e["truth"]]} face">'
+        f'<div class="tile"><img src="{photo(e["file"])}" alt="{NAMES[e["truth"]]} face">'
         f'<div class="k"><em>{"Real" if e["truth"] == 1 else "AI"}</em>{dot(e["you"] == e["truth"])}{dot(e["model"] == e["truth"])}</div></div>'
         for e in log)
     fooled = f"{both_wrong} fooled you both." if both_wrong else "None fooled you both."

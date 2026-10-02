@@ -20,7 +20,8 @@ MobileNetV3Small pre-trained on ImageNet with a custom classification head: whic
 | `app.py` | Streamlit app |
 | `best_model.keras` | Trained model |
 | `requirements.txt` | Dependencies (TensorFlow/Keras pinned to the training versions) |
-| `test_images/` | 80 held-out test faces (40 real, 40 AI) + `labels.csv` (1 = real, 0 = AI) |
+| `test_images/` | 80 held-out test faces (40 real, 40 AI) at 128×128, the size the model sees, + `labels.csv` (1 = real, 0 = AI) |
+| `display_images/` | The same 80 faces at full quality (up to 512 px), shown to players |
 | `model_info.json` | Model name and test accuracy shown in the app |
 | `.streamlit/config.toml` | Colour theme |
 
