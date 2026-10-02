@@ -41,7 +41,7 @@ st.markdown("""
 .stApp{background:var(--bg);}
 .stApp, .stApp p, .stApp label, .stApp button{font-family:var(--font);color:var(--ink);-webkit-font-smoothing:antialiased;}
 #MainMenu, footer, header[data-testid="stHeader"]{display:none !important;}
-.block-container{max-width:540px;padding:2.5rem 1.25rem 3rem;}
+.block-container{max-width:440px;padding:2.5rem 1.25rem 3rem;}
 
 .title{font-family:var(--font-display);font-weight:700;font-size:clamp(2.2rem,7vw,2.9rem);letter-spacing:-.025em;line-height:1.05;text-align:center;margin:0;padding:0;color:var(--ink);}
 .subtitle{text-align:center;color:var(--ink2) !important;font-size:1.05rem;line-height:1.45;margin:.5rem auto 1.75rem;max-width:26rem;}
@@ -59,12 +59,12 @@ st.markdown("""
 .track i{flex:1;height:5px;border-radius:3px;background:var(--fill);transition:background .3s;}
 .track i.r{background:var(--right);} .track i.w{background:var(--wrong);} .track i.now{background:var(--ink3);}
 
-.photo{position:relative;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow);background:var(--fill);line-height:0;
+.photo{position:relative;width:256px;max-width:100%;margin:0 auto;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow);background:var(--fill);line-height:0;
   outline:0 solid transparent;outline-offset:0;transition:outline-color .3s;}
 .photo img{width:100%;aspect-ratio:1;object-fit:cover;display:block;}
 .photo.r{outline:4px solid var(--right);outline-offset:-4px;} .photo.w{outline:4px solid var(--wrong);outline-offset:-4px;}
-.badge{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);line-height:1.2;white-space:nowrap;
-  padding:.55rem 1.05rem;border-radius:999px;font-weight:600;font-size:.98rem;color:var(--ink);
+.badge{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);line-height:1.2;white-space:nowrap;
+  padding:.45rem .9rem;border-radius:999px;font-weight:600;font-size:.9rem;color:var(--ink);
   background:rgba(255,255,255,.72);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
   box-shadow:0 4px 18px rgba(0,0,0,.14);display:flex;align-items:center;gap:.45rem;animation:pop .45s var(--spring) both;}
 @keyframes pop{from{opacity:0;transform:translate(-50%,14px) scale(.9);}}
